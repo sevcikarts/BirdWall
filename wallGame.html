@@ -11,7 +11,7 @@
       }
       
       canvas {
-        border: 10px solid #0ba396;
+        border: 10px solid #2b8cb3;
       }
       h1 {
         margin-top: 0;
@@ -26,6 +26,9 @@
   </head>
  
   <body>
+    <image id="scream4" src="./clash.png" alt="The Scream" width="50" height="50" style="display: none;"></image>
+    <image id="scream3" src="./logo.png" alt="The Scream" width="50" height="50" style="display: none;"></image>
+    <image id="scream2" src="./logo2.png" alt="The Scream" width="50" height="50" style="display: none;"></image>
     <image id="scream" src="./logo.png" alt="The Scream" width="50" height="50" style="display: none;">
       <image id="brick" src="./brick.png" alt="The Scream" width="50" height="50" style="display: none;">
     <canvas width="600" height="600"></canvas>
@@ -33,23 +36,23 @@
     <script>
       // listeners
       document.addEventListener("keydown", keyPush);
-
+// canvas
       const title = document.querySelector("h1");
-
-      // canvas
       const canvas = document.querySelector("canvas");
       const ctx = canvas.getContext("2d");
       var img = document.getElementById("scream");
       ctx.drawImage(img,10,10);
 
       let game = true;
+
       // player
       const brickSize = 50;
       let brickSpeed = 1;
 
       let score = 0;
-
-
+      var player4 = document.getElementById("scream4");
+      var player3 = document.getElementById("scream3");
+      var player2 = document.getElementById("scream2");
       var player = document.getElementById("scream");
       var brick = document.getElementById("brick");
       
@@ -75,8 +78,8 @@
       let wall1y = 100;
       let wall2x = Math.floor(Math.random() * 12) * brickSize;
       let wall2y = 400;
-      function gameLoop() {}
-
+      
+      
       // loop
       function gameLoop() {
         
@@ -146,15 +149,10 @@
         if (score === 1) {
           brickSpeed = 2;
         }
-        if (score === 5) {
-          brickSpeed = 3;
-        }
         if (score === 10) {
-          brickSpeed = 4;
-        }
-        if (score === 20) {
           brickSpeed = 5;
         }
+        
       }
       function gameover() {
         walls.forEach((walls) => {
@@ -164,6 +162,7 @@
             brickPosX !== wall1x
           ) {
             game = false;
+            player = player4
           }
         });
       }
@@ -215,11 +214,16 @@
         switch (event.key) {
           case "ArrowLeft":
             brickPosX -= 50;
-            player.style.transform = "rotate(90deg)";
+            player = player2
             break;
           case "ArrowRight":
             brickPosX += 50;
+            player = player3
             break;
+          default:
+						// restart game
+						if (!game) location.reload();
+						break;
         }
         
       }
